@@ -1,5 +1,7 @@
 package com.WAA.WebShop.web;
 
+import com.WAA.WebShop.data.OrderRepository;
+import com.WAA.WebShop.domain.Order;
 import com.WAA.WebShop.domain.Product;
 import com.WAA.WebShop.service.ProductDTO;
 import com.WAA.WebShop.service.ProductService;
@@ -14,10 +16,13 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class ProductController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    OrderRepository orderRepository;
 
     @GetMapping("/products")
     public ResponseEntity<?> getAllProducts(@RequestParam(value="name",required = false) String name){
@@ -79,5 +84,23 @@ public class ProductController {
         }
         productService.deleteProduct(productNumber);
         return new ResponseEntity<ProductDTO>(HttpStatus.NO_CONTENT);
+    }
+    @PostMapping("/orders")
+    public ResponseEntity<?> addOrder(@RequestBody Order order){
+        orderRepository.save(order);
+        return new ResponseEntity<Order>(order,HttpStatus.OK);
+    }
+    @GetMapping("/orders")
+    public ResponseEntity<?> getAllOrders(){
+        Collection<Order> orders = orderRepository.findAll();
+
+        Orders orders1 = new Orders();
+        orders1.setOrders(orders);
+
+
+        if(orders.size()==0){
+            return new ResponseEntity<CustomErrorType>(new CustomErrorType("No orders Found"),HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Orders>(orders1,HttpStatus.OK);
     }
 }

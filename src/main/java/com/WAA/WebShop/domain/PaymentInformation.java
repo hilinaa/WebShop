@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class PaymentInformation {
     private String creditCardType;
-    private int CardNumber;
+    private int cardNumber;
     private Date validDate;
     private int validationCode;
 
-    public PaymentInformation(String creditCardType, int cardNumber, Date validDate, int validationCode) {
+    public PaymentInformation(String creditCardType, int cardNumber, int validationCode) {
         this.creditCardType = creditCardType;
-        CardNumber = cardNumber;
-        this.validDate = validDate;
+        this.cardNumber = cardNumber;
+//        this.validDate = validDate;
         this.validationCode = validationCode;
     }
 
@@ -24,11 +24,11 @@ public class PaymentInformation {
     }
 
     public int getCardNumber() {
-        return CardNumber;
+        return cardNumber;
     }
 
     public void setCardNumber(int cardNumber) {
-        CardNumber = cardNumber;
+       this.cardNumber = cardNumber;
     }
 
     public Date getValidDate() {
